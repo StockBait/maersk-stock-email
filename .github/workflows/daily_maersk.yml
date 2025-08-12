@@ -2,7 +2,7 @@ name: Daily Maersk Intraday Email
 
 on:
   schedule:
-    - cron: "10 15 * * 1-5"  # Weekdays at 15:10 UTC
+    - cron: "0 16 * * 1-5"  # Weekdays at 16:00 UTC
   workflow_dispatch:
 
 jobs:
