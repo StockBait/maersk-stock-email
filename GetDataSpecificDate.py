@@ -24,7 +24,7 @@ end_date = (datetime.strptime(date_str, "%Y-%m-%d") + timedelta(days=1)).strftim
 all_data = []
 for ticker in TICKERS:
     stock = yf.Ticker(ticker)
-    df = stock.history(start=start_date, end=end_date, interval="1d")
+    df = stock.history(start=start_date, end=end_date, interval="1m")
     df.reset_index(inplace=True)
     df["Ticker"] = ticker
     all_data.append(df)
