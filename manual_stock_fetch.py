@@ -24,15 +24,20 @@ end_date = (datetime.strptime(date_str, "%Y-%m-%d") + timedelta(days=1)).strftim
 all_data = []
 for ticker in TICKERS:
     stock = yf.Ticker(ticker)
-    df = stock.history(start=start_date, end=end_date, interval="1m")
+    df = stock.history(start=start_date, end=end_date, interval="1d")
     df.reset_index(inplace=True)
+
+    # Ensure the date column is named consistently
+    if "Date" not in df.columns and "Datetime" in df.columns:
+        df.rename(columns={"Datetime": "Date"}, inplace=True)
+
     df["Ticker"] = ticker
     all_data.append(df)
 
 # Combine all data
 final_df = pd.concat(all_data)
 
-# Sort by Ticker first, then Date
+# Sort by Ticker and Date
 final_df.sort_values(by=["Ticker", "Date"], inplace=True)
 
 # Save to CSV
